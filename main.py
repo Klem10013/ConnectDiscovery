@@ -16,13 +16,14 @@ def get_next_port(indice : int) -> int:
 class server(th.Thread):
 
     def __init__(self,name : str,port : int,other_clients : list[tuple[str,int]],screen : display.screen):
+        #Thread setup
+        th.Thread.__init__(self)
+        self.__stop_event = th.Event()
+
         self.name = name
         self.port = port
         self.other_clients = other_clients
 
-        #Thread setup
-        th.Thread.__init__(self)
-        self.__stop_event = th.Event()
 
         #Socket setup
         self.server = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
