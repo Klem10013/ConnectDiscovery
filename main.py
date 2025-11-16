@@ -99,12 +99,13 @@ class client:
         self.name = name
         self.func = func
         self.other_clients = []
+        self.client = None
 
         #Screen setup
         self.main_screen : display.screen = screen #Main screen use to display everything
         self.main_screen.split_horizontally(0.4) #Split between server screen and client screen
         self.client_screen : display.screen = self.main_screen.get_screen(1) #Screen use to display client info
-        self.client_screen.split_vertical(0.6) #Split between client info and other clients
+        self.client_screen.split_vertical(0.4) #Split between client info and other clients
         self.screen = self.client_screen.get_screen(0) #Screen use to display client info
         self.other_screen = self.client_screen.get_screen(1) #Screen use to display other clients
 
@@ -136,15 +137,17 @@ class client:
     def stop(self):
         self.screen.append("exit")
         self.actif = False
-        self.client.close()
         self.server.stop()
+        if self.client is not None:
+            self.client.close()
 
     def connect(self,port):
         todo = True
 
     def find_server(self):
         if self.loocking_for_server:
-            if port := self.func(self.indice) != -1:
+            port = self.func(self.indice)
+            if port == -1:
                 self.indice = 0
             elif port == self.port:
                 self.indice += 1
