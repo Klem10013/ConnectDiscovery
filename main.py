@@ -102,9 +102,9 @@ class client:
 
         #Screen setup
         self.main_screen : display.screen = screen #Main screen use to display everything
-        self.main_screen.split_horizontally(0.8) #Split between server screen and client screen
+        self.main_screen.split_horizontally(0.4) #Split between server screen and client screen
         self.client_screen : display.screen = self.main_screen.get_screen(1) #Screen use to display client info
-        self.client_screen.split_vertical(0.8) #Split between client info and other clients
+        self.client_screen.split_vertical(0.6) #Split between client info and other clients
         self.screen = self.client_screen.get_screen(0) #Screen use to display client info
         self.other_screen = self.client_screen.get_screen(1) #Screen use to display other clients
 
@@ -149,6 +149,7 @@ class client:
             elif port == self.port:
                 self.indice += 1
             else:
+                self.indice += 1
                 self.screen.append(f"Trying to connect to server on port {port}")
                 try:
                     self.client = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
